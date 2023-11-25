@@ -8,7 +8,8 @@ Todo:
     * Keep track of modlists
 """
 from flask import Flask
-from src import *
+from src.services.database import Database
+from src.routes.routes import Blueprint
 
 # Define constants and establish flask app
 DATABASE_PATH = 'db/db.sqlite3'
@@ -24,6 +25,9 @@ def main():
     
     print("Starting Flask app... (Ctrl+C to stop)")
     app = Flask(__name__)
+    
+    
+    
     app.run(debug=True,)
 
 

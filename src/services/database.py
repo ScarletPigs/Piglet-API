@@ -62,17 +62,50 @@ class Database:
         except Error as e:
             print(e)
     
-    def add_entry(self, table_name: str, entry: tuple):
+    def add_entry(self, table_name: str, entry: dict):
         """Adds an entry to the database.
 
         Args:
             table_name (str): The name of the table to add the entry to.
-            entry (tuple): The entry to add to the database.
+            entry (dict): The entry to add to the database.
         """
         cursor = self.conn.cursor()
         try:
-            cursor.execute(f"INSERT INTO {table_name} VALUES {entry}")
+            columns = ', '.join(entry.keys())
+            values = tuple(entry.values())
+            placeholders = ', '.join(['?'] * len(entry))
+            cursor.execute(f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})", values)
             self.conn.commit()
         except Error as e:
             print(e)
-        
+    
+    def fetch_entry(self, table_name: str, condition: str):
+        """Fetches entries from the database based on a condition.
+
+        Args:
+            table_name (str): The name of the table to fetch entries from.
+            condition (str): The condition to filter the entries.
+
+        Returns:
+            List: A list of database entries that match the condition.
+        """
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute(f"SELECT * FROM {table_name} WHERE {condition}")
+            return cursor.fetchall()
+        except Error as e:
+            print(e)
+    
+    def delete_entry(self, table_name: str, condition: str):
+        """Deletes entries from the database based on a condition.
+
+        Args:
+            table_name (str): The name of the table to delete entries from.
+            condition (str): The condition to filter the entries.
+        """
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute(f"DELETE FROM {table_name} WHERE {condition}")
+            self.conn.commit()
+        except Error as e:
+            print(e)
