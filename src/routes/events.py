@@ -5,7 +5,7 @@ from datetime import date
 from sqlalchemy.orm import Session
 from ..services.database import get_db
 
-router = APIRouter(prefix="/events")
+router = APIRouter(prefix="/events", tags=["events"])
 
 events = []
 
