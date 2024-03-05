@@ -15,7 +15,7 @@ async def create_reservation(body, db: Session = Depends(get_db)):
     db.add(newEvent)
     db.commit()
     db.refresh(newEvent)
-    return {"status": "success", "data": newEvent}
+    return newEvent
 
 # Get all reservations
 @router.get("/")
