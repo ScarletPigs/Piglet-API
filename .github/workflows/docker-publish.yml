@@ -53,4 +53,4 @@ jobs:
                 cache-to: type=gha,mode=max
 
             - name: Sign the published image
-              run: cosign sign --key ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.tags }}
+              run: cosign sign --key cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.tags }}
