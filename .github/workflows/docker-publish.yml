@@ -23,9 +23,6 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Install cosign tool
-              uses: sigstore/cosign-installer@v3.4.0
-
             - name: Setup Docker buildx
               uses: docker/setup-buildx-action@v2
 
@@ -51,6 +48,3 @@ jobs:
                 labels: ${{ steps.meta.outputs.labels }}
                 cache-from: type=gha
                 cache-to: type=gha,mode=max
-
-            - name: Sign the published image
-              run: cosign sign --key cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.tags }}
