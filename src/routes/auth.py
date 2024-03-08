@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Depends
-from ..models.reservation import Reservation
+from ..models.event import Event
 from ..models.user import Modsets
 from datetime import date
 from sqlalchemy.orm import Session
