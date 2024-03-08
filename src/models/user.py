@@ -1,9 +1,9 @@
 from ..services.database import Base
-from sqlalchemy import Column, Integer, String, ARRAY, DateTime
+from sqlalchemy import Column, Integer, String
 
-class Modsets(Base):
-    __tablename__ = "Modsets"
+class User(Base):
+    __tablename__ = "User"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    filename = Column(String)
-    discord_msg_id = Column(String)
+    name = Column(String)
+    discord_id = Column(String)
