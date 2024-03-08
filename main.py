@@ -1,6 +1,6 @@
+from src.services.database import Base, engine
 from fastapi import FastAPI
 from src.routes import event, eventtype
-from src.services.database import Base, engine
 
 
 Base.metadata.create_all(bind=engine)
