@@ -1,6 +1,6 @@
 from src.services.database import Base, engine
 from fastapi import FastAPI
-from src.routes import event, eventtype, setting, modset
+from src.routes import event, eventtype, setting, modset, userrole
 
 
 Base.metadata.create_all(bind=engine)
@@ -11,6 +11,7 @@ app.include_router(event.router)
 app.include_router(eventtype.router)
 app.include_router(setting.router)
 app.include_router(modset.router)
+app.include_router(userrole.router)
 
 @app.get("/api/routes", tags=["api"])
 async def get_api_routes():
