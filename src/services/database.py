@@ -1,7 +1,10 @@
-import sqlite3
-from sqlite3 import Error
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+
+
+if not os.path.exists('db'):
+    os.makedirs('db')
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///db/db.sqlite3"
 
