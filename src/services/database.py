@@ -6,9 +6,9 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 if not os.path.exists('db'):
     os.makedirs('db')
     
-con = connect('db/db.sqlite3')
+con = connect('app/db/db.sqlite3')
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///db/db.sqlite3"
+SQLALCHEMY_DATABASE_URL = "sqlite:////app/db/db.sqlite3"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
