@@ -4,7 +4,6 @@ from typing import Optional
 
 
 class EventTypeBase(BaseModel):
-    id: int
     
     class Config:
         from_attributes = True
@@ -18,5 +17,6 @@ class EventTypeUpdate(EventTypeBase):
     requiredPermission: Optional[int]
     
 class EventTypeResponse(EventTypeBase):
+    id: int
     name: str
     requiredPermission: int

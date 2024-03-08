@@ -21,8 +21,8 @@ async def create_event(event : EventCreate, db: Session = Depends(get_db)):
     - EventResponse: A newly created Event object
     """
     newEvent = Event(**event.model_dump())
-    newEvent.created_at = datetime.now()
-    newEvent.last_modified = datetime.now()
+    newEvent.createdAt = datetime.now()
+    newEvent.lastModified = datetime.now()
     db.add(newEvent)
     db.commit()
     db.refresh(newEvent)
