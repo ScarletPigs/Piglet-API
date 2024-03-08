@@ -4,14 +4,15 @@ from ..models.user import Modsets
 from datetime import date
 from sqlalchemy.orm import Session
 from ..services.database import get_db
+from ..schemas.reservation import ReservationCreate
 
 router = APIRouter(prefix="/reservations", tags=["reservations"])
 
 
 # Create a new reservation
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_reservation(body, db: Session = Depends(get_db)):
-    newEvent = Reservation(**body)
+async def create_reservation(body : ReservationCreate, db: Session = Depends(get_db)):
+    newEvent = Reservation(**body.model_dump())
     db.add(newEvent)
     db.commit()
     db.refresh(newEvent)
