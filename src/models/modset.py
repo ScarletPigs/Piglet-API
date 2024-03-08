@@ -1,7 +1,7 @@
 from ..services.database import Base
 from sqlalchemy import Column, Integer, String, ARRAY, DateTime
 
-class Modsets(Base):
+class Modset(Base):
     __tablename__ = "Modset"
     
     id = Column(Integer, primary_key=True, autoincrement=True)

@@ -30,7 +30,7 @@ async def get_setting_by_id(id: int, db: Session = Depends(get_db)):
 @router.post("/", response_model=SettingResponse)
 async def create_setting(setting: SettingBase, db: Session = Depends(get_db)):
     """Create a new setting"""
-    db_setting = Setting(name=setting.name, value=setting.value)
+    db_setting = Setting(setting.model_dump())
     db.add(db_setting)
     db.commit()
     db.refresh(db_setting)
