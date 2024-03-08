@@ -16,12 +16,34 @@ def get_eventtypes(db: Session = Depends(get_db)):
     Get event types from the database and return a list of EventTypeResponse objects.
 
     Parameters:
-    - db (Session): The SQLAlchemy database session.
 
     Returns:
     - List[EventTypeResponse]: A list of EventTypeResponse objects.
     """
     return db.query(EventType).all()
+
+
+
+@router.get("/{eventtype_id}", response_model=EventTypeResponse)
+def get_eventtype_by_id(eventtype_id: int, db: Session = Depends(get_db)):
+    """
+    Get an event type by its ID from the database and return an EventTypeResponse object.
+
+    Parameters:
+    - eventtype_id (int): The ID of the event type to retrieve.
+
+    Returns:
+    - EventTypeResponse: The event type with the specified ID.
+
+    Raises:
+    - HTTPException 404: If no event type with the specified ID exists in the database.
+    """
+    eventtype = db.query(EventType).filter(EventType.id == eventtype_id).first()
+    if eventtype is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Event Type not found")
+    return eventtype
+
+
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
@@ -31,7 +53,6 @@ def create_eventtype(eventtype : EventTypeCreate, db: Session = Depends(get_db))
 
     Parameters:
     - eventtype (EventTypeCreate): A EventTypeCreate object.
-    - db (Session): The SQLAlchemy database session.
 
     Returns:
     - EventTypeResponse: A newly created EventType object.
@@ -50,7 +71,6 @@ def delete_eventtype(eventtype_id : int, db: Session = Depends(get_db)):
 
     Parameters:
     - eventtype_id (int): The ID of the event type to be deleted.
-    - db (Session): The SQLAlchemy database session.
 
     Returns:
     - int: The number of rows deleted from the database.
@@ -66,7 +86,6 @@ def update_eventtype(eventtype_id: int, eventtype: EventTypeUpdate, db: Session 
     Parameters:
     - eventtype_id (int): The ID of the event type to be updated.
     - eventtype (EventTypeUpdate): An EventTypeUpdate object.
-    - db (Session): The SQLAlchemy database session.
 
     Returns:
     - EventTypeResponse: The updated EventType object.
