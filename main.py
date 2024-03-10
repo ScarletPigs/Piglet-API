@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from src.routes import event, eventtype, setting, modset, userrole, poll, pollresponse
 
 
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(docs_url="/")
