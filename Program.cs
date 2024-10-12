@@ -1,4 +1,9 @@
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Piglet_API.Data;
+using System.Reflection;
+
 namespace Piglet_API
 {
     public class Program
@@ -12,7 +17,16 @@ namespace Piglet_API
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Piglet API", Version = "v1" });
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+            });
+
+            builder.Services.AddDbContext<PigletDBContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("PigletDBContext"));
+            });
 
             var app = builder.Build();
 
