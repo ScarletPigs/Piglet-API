@@ -19,6 +19,11 @@ jobs:
             id-token: write
 
         steps:
+            - name: Checkout domain models repository
+              uses: actions/checkout@v3
+              with:
+                repository: ScarletPigs/PigletDomainModels
+
             - name: Checkout repository
               uses: actions/checkout@v4
 
