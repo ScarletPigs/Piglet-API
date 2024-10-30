@@ -25,10 +25,18 @@ namespace Piglet_API
 
             builder.Services.AddDbContext<PigletDBContext>(options =>
             {
-                options.UseNpgsql(builder.Configuration.GetConnectionString("PigletDBContext"));
+                options.UseNpgsql(Environment.GetEnvironmentVariable("PigletDBContext") ?? "");
             });
 
             var app = builder.Build();
+
+            // Run database migrations
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<PigletDBContext>();
+                context.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

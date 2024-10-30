@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Piglet_Domain_Models.Models;
 
 namespace Piglet_API.Data
 {
@@ -7,5 +8,8 @@ namespace Piglet_API.Data
         public PigletDBContext(DbContextOptions<PigletDBContext> options) : base(options)
         {
         }
+
+        public DbSet<Event> Events => Set<Event>();
+        public DbSet<EventType> EventTypes => Set<EventType>();
     }
 }
