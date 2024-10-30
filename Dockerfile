@@ -15,7 +15,7 @@ WORKDIR /src
 COPY ["Piglet-API.csproj", "./"]
 
 # Copy the domain models project file
-COPY ["PigletDomainModels/PigletDomainModels.csproj", "PigletDomainModels/"]
+COPY ["PigletDomainModels/Piglet-Domain-Models.csproj", "PigletDomainModels/"]
 
 # Restore dependencies
 RUN dotnet restore "Piglet-API.csproj"

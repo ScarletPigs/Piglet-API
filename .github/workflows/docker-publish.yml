@@ -28,10 +28,6 @@ jobs:
                 repository: ScarletPigs/PigletDomainModels
                 path: PigletDomainModels
 
-            - name: List workspace contents
-              run: ls -laR
-              
-
             - name: Setup Docker buildx
               uses: docker/setup-buildx-action@v2
 
