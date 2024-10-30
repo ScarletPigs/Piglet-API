@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Piglet_API.Data;
+using Piglet_API.Repositories;
 using System.Reflection;
 
 namespace Piglet_API
@@ -14,7 +15,10 @@ namespace Piglet_API
 
 
             builder.Services.AddControllers();
-            
+
+            // Register services
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

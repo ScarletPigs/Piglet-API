@@ -17,39 +17,39 @@ namespace Piglet_API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(EventService.GetEvents());
+            return Ok(await EventService.GetEvents());
         }
 
-        [HttpGet]
-        public IActionResult Get([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
+        [HttpGet("fromto")]
+        public async Task<IActionResult> Get([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
         {
-            return Ok(EventService.GetEvents(fromDate, toDate));
+            return Ok(await EventService.GetEvents(fromDate, toDate));
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return Ok(EventService.GetEvent(id));
+            return Ok(await EventService.GetEvent(id));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Event eventobj)
+        public async Task<IActionResult> Post([FromBody] Event eventobj)
         {
-            return Ok(EventService.CreateEvent(eventobj));
+            return Ok(await EventService.CreateEvent(eventobj));
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Event eventobj)
+        public async Task<IActionResult> Put([FromBody] Event eventobj)
         {
-            return Ok(EventService.UpdateEvent(eventobj));
+            return Ok(await EventService.UpdateEvent(eventobj));
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok(EventService.DeleteEvent(id));
+            return Ok(await EventService.DeleteEvent(id));
         }
     }
 }
