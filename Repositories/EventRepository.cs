@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Piglet_API.Data;
+using Piglet_Domain_Models.DTOs.Event;
 using Piglet_Domain_Models.Models;
 
 namespace Piglet_API.Repositories
@@ -9,7 +10,7 @@ namespace Piglet_API.Repositories
         public Task<IEnumerable<Event>> GetEvents();
         public Task<IEnumerable<Event>> GetEvents(DateTime fromDate, DateTime toDate);
         public Task<Event> GetEvent(int id);
-        public Task<Event> CreateEvent(Event eventobj);
+        public Task<Event> CreateEvent(CreateEventDTO eventdto);
         public Task<Event> UpdateEvent(Event eventobj);
         public Task<Event> DeleteEvent(int id);
     }
@@ -38,8 +39,18 @@ namespace Piglet_API.Repositories
             return await DBContext.Events.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<Event> CreateEvent(Event eventobj)
+        public async Task<Event> CreateEvent(CreateEventDTO eventdto)
         {
+            var eventobj = new Event
+            {
+                Name = eventdto.Name,
+                CreatorDiscordUsername = eventdto.CreatorDiscordUsername,
+                Description = eventdto.Description,
+                CreatedAt = DateTime.Now,
+                LastModified = DateTime.Now,
+                StartTime = eventdto.StartTime,
+                EndTime = eventdto.EndTime
+            };
             await DBContext.Events.AddAsync(eventobj);
             await DBContext.SaveChangesAsync();
             return eventobj;

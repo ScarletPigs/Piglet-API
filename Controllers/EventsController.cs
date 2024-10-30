@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Piglet_API.Repositories;
+using Piglet_Domain_Models.DTOs.Event;
 using Piglet_Domain_Models.Models;
 
 namespace Piglet_API.Controllers
@@ -35,9 +36,9 @@ namespace Piglet_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Event eventobj)
+        public async Task<IActionResult> Post([FromBody] CreateEventDTO createEventDTO)
         {
-            return Ok(await EventService.CreateEvent(eventobj));
+            return Ok(await EventService.CreateEvent(createEventDTO));
         }
 
         [HttpPut]
