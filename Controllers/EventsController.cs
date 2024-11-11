@@ -42,7 +42,7 @@ namespace Piglet_API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Event eventobj)
+        public async Task<IActionResult> Put([FromBody] EditEventDTO eventobj)
         {
             return Ok(await EventService.UpdateEvent(eventobj));
         }

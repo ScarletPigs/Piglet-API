@@ -11,7 +11,7 @@ namespace Piglet_API.Repositories
         public Task<IEnumerable<Event>> GetEvents(DateTime fromDate, DateTime toDate);
         public Task<Event> GetEvent(int id);
         public Task<Event> CreateEvent(CreateEventDTO eventdto);
-        public Task<Event> UpdateEvent(Event eventobj);
+        public Task<Event> UpdateEvent(EditEventDTO eventobj);
         public Task<Event> DeleteEvent(int id);
     }
 
@@ -46,21 +46,33 @@ namespace Piglet_API.Repositories
                 Name = eventdto.Name,
                 CreatorDiscordUsername = eventdto.CreatorDiscordUsername,
                 Description = eventdto.Description,
-                CreatedAt = DateTime.Now,
-                LastModified = DateTime.Now,
-                StartTime = eventdto.StartTime,
-                EndTime = eventdto.EndTime
+                CreatedAt = DateTime.Now.ToUniversalTime(),
+                LastModified = DateTime.Now.ToUniversalTime(),
+                StartTime = eventdto.StartTime.ToUniversalTime(),
+                EndTime = eventdto.EndTime.ToUniversalTime()
             };
             await DBContext.Events.AddAsync(eventobj);
             await DBContext.SaveChangesAsync();
             return eventobj;
         }
 
-        public async Task<Event> UpdateEvent(Event eventobj)
+        public async Task<Event> UpdateEvent(EditEventDTO eventobj)
         {
-            DBContext.Events.Update(eventobj);
+            Event? evnt = await DBContext.Events.FirstOrDefaultAsync(e => e.Id == eventobj.Id);
+
+            if (evnt == null)
+                throw new Exception("Event not found");
+
+            evnt.LastModified = DateTime.Now.ToUniversalTime();
+
+            evnt.Name = eventobj.Name ?? evnt.Name;
+            evnt.Description = eventobj.Description ?? evnt.Description;
+            evnt.StartTime = (eventobj.StartTime ?? evnt.StartTime).ToUniversalTime();
+            evnt.EndTime = (eventobj.EndTime ?? evnt.EndTime).ToUniversalTime();
+
+            DBContext.Events.Update(evnt);
             await DBContext.SaveChangesAsync();
-            return eventobj;
+            return evnt;
         }
 
         public async Task<Event> DeleteEvent(int id)
